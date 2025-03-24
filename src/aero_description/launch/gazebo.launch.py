@@ -2,9 +2,8 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
+from launch.actions import ExecuteProcess, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
 
 
 def generate_launch_description():
@@ -19,15 +18,11 @@ def generate_launch_description():
         output="screen",
     )
 
-    # Gazebo World dosyasının yolu (eğer özel world kullanıyorsan)
-    world_file = os.path.join(get_package_share_directory(pkg_name), "worlds", "empty.world")
-
-    # Gazebo'yu başlatmak için
+    # Gazebo'yu başlatmak için (boş dünya)
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory("gazebo_ros"), "launch", "gazebo.launch.py")
-        ),
-        launch_arguments={"world": world_file}.items(),
+        )
     )
 
     # Robotu spawn etmek için
@@ -43,7 +38,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         xacro_to_urdf,
-        DeclareLaunchArgument(name="world", default_value=world_file, description="Gazebo world file"),
         gazebo_launch,
         spawn_entity,
     ])
