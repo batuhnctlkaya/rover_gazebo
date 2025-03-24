@@ -1,0 +1,5 @@
+controller:
+  ros__parameters:
+    max_speed: 1.0  # m/s
+    max_steering: 0.5  # rad/s
+    wheel_radius: 0.1  # metre
