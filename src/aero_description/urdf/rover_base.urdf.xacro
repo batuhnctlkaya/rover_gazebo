@@ -272,4 +272,19 @@
     <axis
       xyz="0 1 0" />
   </joint>
+
+
+
+
+  <gazebo>
+   <xacro:if value="$(arg is_ignition)">
+      <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <parameters>$(find rover_controller)/config/rover_controllers.yaml</parameters>
+      </plugin>
+      <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
+      </plugin>
+    </xacro:if> 
+  </gazebo>
+
+
 </robot>
